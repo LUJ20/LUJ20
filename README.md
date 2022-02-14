@@ -1,5 +1,4 @@
-- 👋 Hi, I’m Layo
-- 👀 I’m interested in Data and analytics
+
 
 
 <!---
