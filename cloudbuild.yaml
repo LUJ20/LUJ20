@@ -13,7 +13,7 @@ steps:
 
 # Connect to server and stop current container
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'sudo docker stop gcr.io/layodemo/github.com/luj20/luj20:a597fc1b918a40d879de6e3ad831d2b74c3d0a9e']
+    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'sudo docker stop 3a5a2ec6d438']
 
   # Connect to server and start new container
   #- name: 'gcr.io/cloud-builders/gcloud'
