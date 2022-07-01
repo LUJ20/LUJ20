@@ -7,7 +7,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/layodemo/github.com/luj20/luj20:latest']
 
-# Connect to GCE server and pull new image
+# Connect to GCE server and pull new image 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a', '--command', 'gcloud docker -- pull gcr.io/layodemo/github.com/luj20/luj20:latest']
 
