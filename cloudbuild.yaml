@@ -1,28 +1,27 @@
- Build Docker image: docker build -f Dockerfile -t gcr.io/my-project/my-image:latest .
+docker build -f Dockerfile -t gcr.io/my-project/my-image:latest .
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-f', 'Dockerfile', '-t', 'gcr.io/my-project/my-image:latest', '.']
 
-# Push to GCR: gcloud docker -- push gcr.io/my-project/my-image:latest
+gcloud docker -- push gcr.io/my-project/my-image:latest
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/my-project/my-image:latest']
 
-# Connect to GCE server and pull new image
+
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute', 'ssh', '$_SERVER', '--zone', '$_ZONE', '--command', 'gcloud docker -- pull gcr.io/my-project/my-image:latest']
 
-# Connect to server and stop current container
+
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute', 'ssh', '$_SERVER', '--zone', '$_ZONE',  '--command', 'docker stop my-image']
 
-# Connect to server and stop current container
+
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute', 'ssh', '$_SERVER', '--zone', '$_ZONE',  '--command', 'docker rm my-image']
 
-  # Connect to server and start new container
+
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute', 'ssh', '$_SERVER', '--zone', '$_ZONE',  '--command', 'docker run  --restart always --name my-image -d -p 443:443  --log-driver=gcplogs  gcr.io/my-project/my-image:latest']
 
 
-substitutions:
   _SERVER: 'techpuz8'
   _ZONE: 'techpuz8'
