@@ -13,7 +13,7 @@ steps:
 
 # Connect to server and stop current container
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker stop my-image']
+    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'sudo docker stop my-image']
 
   # Connect to server and start new container
   #- name: 'gcr.io/cloud-builders/gcloud'
