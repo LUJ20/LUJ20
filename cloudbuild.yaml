@@ -1,5 +1,5 @@
 steps:
-# Build Docker image: docker build -f Dockerfile -t gcr.io/my-project/my-image:latest .
+# Build Docker image: docker build -f Dockerfile -t gcr.io/my-project/my-image:latest
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', 'Dockerfile', '-t', 'gcr.io/layodemo/github.com/luj20/luj20:latest', '.']
 
