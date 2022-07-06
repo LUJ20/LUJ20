@@ -17,7 +17,7 @@ steps:
 
 # Connect to server and stop current container
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker rm $$(docker container ls -aq)']
+    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker stop $$(docker container ls -aq)']
 
   # Connect to server and start new container
   - name: 'gcr.io/cloud-builders/gcloud'
