@@ -19,10 +19,6 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker stop $$(docker container ls -aq)']
     
-# Connect to server and remove stopped container
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker rm $$(docker ps --filter "status=exited")']
-    
-  # Connect to server and start new container
+# Connect to server and start new container
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['compute', 'ssh', 'techpuz8', '--zone', 'us-central1-a',  '--command', 'docker run  --restart always --name NodeJS --log-driver=gcplogs  gcr.io/layodemo/github.com/luj20/luj20:latest']
