@@ -1,0 +1,32 @@
+--Combined the Orders, locations datasets using BigQuery Omni, and remotely aggregated the data on AWS.Joining this dataset with geospatial datasets helps us to derive geo spatial coordinates
+
+Select sales.store_city store_city,
+sales.number_of_sales_last_10_mins number_of_sales_last_10_mins,
+sales.store_zip store_zip,
+ ST_GeogPoint(zip_lat_lng.longitude ,
+   zip_lat_lng.latitude  ) geo
+FROM (
+ SELECT
+   FORMAT_DATETIME("%X",
+     CURRENT_DATETIME("America/Los_Angeles")) current_time,
+   MAX(DATETIME(time_of_sale,
+       "America/Los_Angeles")) time_of_last_sale,
+   COUNT(1) number_of_sales_last_10_mins,
+   locations.city store_city,
+   locations.zip store_zip
+ FROM
+   `bqomni-blog.aws_locations.orders_small`  sales
+ JOIN
+   `bqomni-blog.aws_locations.locations` locations
+ ON
+   sales.store_id = locations.id
+ GROUP BY
+   locations.city,
+   locations.zip ) sales
+JOIN
+   `bqomni-blog.aws_locations.zipcode` zip_lat_lng
+ON
+ cast(sales.store_zip as INT) = cast(zip_lat_lng.zipcode as INT)
+ WHERE ST_WITHIN( ST_GeogPoint(zip_lat_lng.longitude , zip_lat_lng.latitude  ) ,ST_GeogFromText(zip_lat_lng.zipcode_geom ) )
+ AND zip_lat_lng.state_name  = "New York"
+ ORDER BY number_of_sales_last_10_mins
